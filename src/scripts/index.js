@@ -5,17 +5,6 @@ const search = document.getElementById("search");
 const searchResults = document.getElementById("results");
 const form = document.getElementById("form");
 const popular = document.getElementById("popular");
-// let isbn10 = "";
-// let isbn13 = "";
-
-// fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}:keyes&key=${Google_API_KEY}`)
-// 	.then((response) => response.json())
-// 	// .then((data) => console.log(data))
-// 	.then((data) => {
-// 		displayResults(data.items);
-// 	});
-
-/* Script for search */
 
 form.addEventListener("submit", ($e) => {
 	$e.preventDefault();
