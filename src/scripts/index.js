@@ -5,8 +5,8 @@ const search = document.getElementById("search");
 const searchResults = document.getElementById("results");
 const form = document.getElementById("form");
 const popular = document.getElementById("popular");
-let isbn10 = "";
-let isbn13 = "";
+// let isbn10 = "";
+// let isbn13 = "";
 
 // fetch(`https://www.googleapis.com/books/v1/volumes?q=${search}:keyes&key=${Google_API_KEY}`)
 // 	.then((response) => response.json())
@@ -52,29 +52,61 @@ function displayResults(data) {
 
 fetch(`https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?api-key=${Nyt_API_KEY}`)
 	.then((response) => response.json())
-	// .then((data) => console.log(data))
 	.then((data) => {
 		getBestSellersId(data.results);
 	});
 
 function getBestSellersId(data) {
-	// console.log(data);
-	popular.innerHTML = "";
-	data.map((bookId) => {
-		console.log(bookId.isbns[0]);
-		// console.log(bookId.isbns[0].isbn10);
-		// console.log(bookId.isbns[0].isbn13);
-		let isbn10 = `${bookId.isbns[0].isbn10}`;
-		let isbn13 = `${bookId.isbns[0].isbn13}`;
+	let bookPromises = [];
+	data.forEach((bookId) => {
+		const isbn10 = bookId.isbns[0]?.isbn10;
+		const isbn13 = bookId.isbns[0]?.isbn13;
 
-		if ((isbn10 = `${bookId.isbns[0].isbn10}`)) {
-			fetch(`https://www.googleapis.com/books/v1/volumes?isbn=${isbn10}:keyes&key=${Google_API_KEY}`);
-		} else if ((isbn13 = `${bookId.isbns[0].isbn13}`)) {
-			fetch(`https://www.googleapis.com/books/v1/volumes?isbn=${isbn13}:keyes&key=${Google_API_KEY}`);
+		let fetchUrl = "";
+
+		if (isbn13) {
+			fetchUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn13}&key=${Google_API_KEY}`;
+		} else if (isbn10) {
+			fetchUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn10}&key=${Google_API_KEY}`;
 		} else {
-			console.log("no books found with matching ISBN");
+			console.log("No books found with matching ISBN");
+			return;
 		}
+
+		bookPromises.push(
+			fetch(fetchUrl)
+				.then((response) => response.json())
+				.then((bookData) => {
+					return bookData.items;
+				})
+				.catch((error) => {
+					console.error("Error fetching book data:", error);
+					return [];
+				})
+		);
+	});
+
+	Promise.all(bookPromises).then((booksData) => {
+		const allBooks = booksData.flat();
+		displayBestSellers(allBooks);
 	});
 }
 
-// TODO: add if else function, if isbn10 is empty use isbn13, if isbn13 is also empty do not show that book
+/* Display best sellers */
+
+function displayBestSellers(bookData) {
+	popular.innerHTML = "";
+	bookData.forEach((bookResult) => {
+		console.log(bookResult);
+		const bookElement = document.createElement("div");
+		bookElement.classList.add("book");
+		bookElement.innerHTML = `
+            <img src="${bookResult.volumeInfo.imageLinks?.thumbnail}" alt="${
+			bookResult.volumeInfo.title || "Book Cover"
+		}"> 
+            <p class="title">${bookResult.volumeInfo.title}</p>
+			<p class="authors">${bookResult.volumeInfo.authors}</p>
+        `;
+		popular.appendChild(bookElement);
+	});
+}

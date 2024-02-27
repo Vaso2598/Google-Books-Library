@@ -4,6 +4,10 @@
     font-family: "Inter", sans-serif;
 }
 
+section{
+    margin: 0 24px;
+}
+
 .form{
     display: flex;
     justify-content: center;
@@ -22,7 +26,24 @@
     justify-content: space-evenly;
 }
 
+.popular{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
 .book{
+    display: flex;
+    flex-direction: column;
     width: 200px;
     height: 300px;
+}
+
+.book img{
+    width: 130px;
+    height: 200px;
+}
+
+.title{
+    font-weight: bold;
 }
