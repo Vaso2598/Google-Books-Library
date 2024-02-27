@@ -4,7 +4,20 @@
     font-family: "Inter", sans-serif;
 }
 
+main{
+    margin: 0 24px;
+}
+
+.mainPage{
+    display: flex;
+    gap: 24px;
+}
+
 /* Header Styles */
+
+body{
+    background-color: #E5E5E5;
+}
 
 header{
     padding: 15px 24px;
@@ -15,14 +28,6 @@ header a{
     text-decoration: none;
     color: #010C12;
     user-select: none;
-}
-
-main{
-    background-color: #E5E5E5;
-}
-
-section{
-    margin: 0 24px;
 }
 
 .form{
@@ -39,6 +44,7 @@ h2{
 .search{
     margin: 24px 0;
     width: 70vw;
+    border: 1px #14213D solid;
     border-radius: 20px;
     padding: 10px;
 }
@@ -57,6 +63,36 @@ h2{
     justify-content: space-between;
     gap: 24px;
     margin-top: 20px;
+}
+
+/* Aside Menu Styles */
+
+aside{
+    width: 200px;
+    background-color: #E5E5E5;
+}
+
+aside ul{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+aside li{
+    list-style: none;    
+}
+
+aside a{
+    text-decoration: none;
+    color: #010C12;
+    font-weight: 400;
+}
+
+aside li:hover{
+    background-color: #FCA311;
+    border-radius: 15px;
+    padding: 5px 15px;
 }
 
 /* Global Book style */

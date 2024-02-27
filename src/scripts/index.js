@@ -1,4 +1,4 @@
-const Google_API_KEY = "AIzaSyCba6TVOGjsMW8yOEJjTE9JXnAvA7mU3JU";
+const Google_API_KEY = "AIzaSyC20juLxxzWQGC1YxsweUMsX9v60LcNq8k";
 const Nyt_API_KEY = "DeAFDYAoBJe6gYO8gy88zHOH377fhZG0";
 
 const search = document.getElementById("search");
@@ -30,8 +30,11 @@ function displayResults(data) {
 		const bookElement = document.createElement("div");
 		bookElement.classList.add("book");
 		bookElement.innerHTML = `
-			<img src="${bookResult.volumeInfo.imageLinks.thumbnail}"> 
-			<p>${bookResult.volumeInfo.title}</p>
+            <img src="${bookResult.volumeInfo.imageLinks?.thumbnail}" alt="${
+			bookResult.volumeInfo.title || "Book Cover"
+		}"> 
+            <p class="title">${bookResult.volumeInfo.title}</p>
+			<p class="authors">${bookResult.volumeInfo.authors}</p>
         `;
 		searchResults.appendChild(bookElement);
 	});
@@ -85,8 +88,9 @@ function getBestSellersId(data) {
 
 function displayBestSellers(bookData) {
 	popular.innerHTML = "";
-	bookData.forEach((bookResult) => {
-		console.log(bookResult);
+	const booksToShow = bookData.slice(0, 10);
+	booksToShow.forEach((bookResult) => {
+		// console.log(bookResult);
 		const bookElement = document.createElement("div");
 		bookElement.classList.add("book");
 		bookElement.innerHTML = `
@@ -96,6 +100,7 @@ function displayBestSellers(bookData) {
             <p class="title">${bookResult.volumeInfo.title}</p>
 			<p class="authors">${bookResult.volumeInfo.authors}</p>
         `;
+
 		popular.appendChild(bookElement);
 	});
 }

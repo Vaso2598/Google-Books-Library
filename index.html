@@ -16,15 +16,28 @@
 			</h1>
 		</header>
 		<main>
-			<form id="form" class="form">
-				<input type="search" id="search" class="search" placeholder="Enter book title or author" />
-			</form>
 			<section>
+				<form id="form" class="form">
+					<input type="search" id="search" class="search" placeholder="Enter book title or author" />
+				</form>
 				<div id="results" class="results"></div>
 			</section>
-			<section>
-				<h2>Best Sellers</h2>
-				<div id="popular" class="popular"></div>
+			<section class="mainPage">
+				<aside>
+					<h3>Books by Genre</h3>
+					<ul>
+						<li><a href="">Fantasy</a></li>
+						<li><a href="">Science Fiction</a></li>
+						<li><a href="">Mystery/Thriller</a></li>
+						<li><a href="">Romance</a></li>
+						<li><a href="">Fiction</a></li>
+						<li><a href="">Horror</a></li>
+					</ul>
+				</aside>
+				<div>
+					<h2>Best Sellers</h2>
+					<div id="popular" class="popular"></div>
+				</div>
 			</section>
 		</main>
 		<script src="./src/scripts/index.js"></script>
