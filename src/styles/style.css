@@ -8,9 +8,8 @@ main{
     margin: 0 24px;
 }
 
-.mainPage{
+.homePage{
     display: flex;
-    gap: 24px;
 }
 
 /* Header Styles */
@@ -57,7 +56,7 @@ h2{
 
 /* Popular Books Styles*/
 
-.popular{
+.bookList{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -92,7 +91,7 @@ aside a{
 aside li:hover{
     background-color: #FCA311;
     border-radius: 15px;
-    padding: 5px 15px;
+    /* padding: 5px 15px; */
 }
 
 /* Global Book style */
@@ -101,19 +100,18 @@ aside li:hover{
     display: flex;
     flex-direction: column;
     width: 200px;
-    height: 300px;
     align-items: center;
 }
 
 .book img{
     width: 130px;
     height: 200px;
+    object-fit: cover;
 }
 
 .book .title{
     padding : 10px;
     width: 200px;
-    /* height: 50px; */
     font-weight: bold;
 }
 

@@ -57,9 +57,9 @@ function getBestSellersId(data) {
 		let fetchUrl = "";
 
 		if (isbn13) {
-			fetchUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn13}&key=${Google_API_KEY}`;
+			fetchUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn13}`;
 		} else if (isbn10) {
-			fetchUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn10}&key=${Google_API_KEY}`;
+			fetchUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn10}`;
 		} else {
 			console.log("No books found with matching ISBN");
 			return;
@@ -88,7 +88,7 @@ function getBestSellersId(data) {
 
 function displayBestSellers(bookData) {
 	popular.innerHTML = "";
-	const booksToShow = bookData.slice(0, 10);
+	const booksToShow = bookData.slice(0, 8);
 	booksToShow.forEach((bookResult) => {
 		// console.log(bookResult);
 		const bookElement = document.createElement("div");
@@ -96,7 +96,7 @@ function displayBestSellers(bookData) {
 		bookElement.innerHTML = `
             <img src="${bookResult.volumeInfo.imageLinks?.thumbnail}" alt="${
 			bookResult.volumeInfo.title || "Book Cover"
-		}"> 
+		}">
             <p class="title">${bookResult.volumeInfo.title}</p>
 			<p class="authors">${bookResult.volumeInfo.authors}</p>
         `;
@@ -104,3 +104,17 @@ function displayBestSellers(bookData) {
 		popular.appendChild(bookElement);
 	});
 }
+
+/* Event Listener for genres */
+
+const genreList = document.getElementById("genre");
+
+genreList.addEventListener("click", ($e) => {
+	$e.preventDefault();
+	const target = $e.target;
+	// console.log(target.textContent);
+	const genre = `${target.textContent}`;
+	console.log(genre);
+	window.location.href = `./genre.html?subject=${genre}`;
+	console.log(window.location.href);
+});
