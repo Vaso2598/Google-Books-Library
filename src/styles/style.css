@@ -8,12 +8,10 @@
     display: none;
 }
 
-main{
-    margin: 0 24px;
-}
-
 .homePage{
     display: flex;
+    justify-content: space-between;
+    margin-right: 100px;
 }
 
 /* Header Styles */
@@ -25,12 +23,17 @@ body{
 header{
     padding: 15px 24px;
     background-color: #FCA311;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header a{
     text-decoration: none;
     color: #010C12;
     user-select: none;
+    font-weight: bold;
 }
 
 .form{
@@ -52,10 +55,55 @@ h2{
     padding: 10px;
 }
 
-.results{
+.darken {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    display: none;
+}
+
+.results {
+    position: absolute;
+    z-index: 2;
+    display: none;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9));
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    width: 90vw;
+    max-height: 400px;
+    overflow-y: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.results.show {
+    display: block;
+}
+
+.result-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    gap: 24px;
+}
+
+.result {
+    flex: 0 0 calc(20% - 24px);
+    text-align: center;
+}
+
+.results a {
+    display: block;
+    color: #E5E5E5;
+    margin-top: 20px;
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: center;
 }
 
 /* Main page Styles*/
@@ -63,7 +111,7 @@ h2{
 .mainBookList{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
     gap: 24px;
     margin-top: 20px;
 }
@@ -71,24 +119,18 @@ h2{
 .gerneBookList{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
     gap: 24px;
     margin-top: 20px;
-}
-
-.mainSection{
-    width: 85vw;
-}
-
-.gerneSection{
-    width: 85vw;
 }
 
 /* Aside Menu Styles */
 
 aside{
-    width: 15vw;
     background-color: #E5E5E5;
+    padding-top: 10px;
+    border-radius: 5px;
+    padding-left: 24px;
 }
 
 aside ul{
@@ -96,6 +138,8 @@ aside ul{
     flex-direction: column;
     gap: 10px;
     margin-top: 10px;
+    padding-left: 0;
+    justify-content: flex-end;
 }
 
 aside li{
@@ -107,7 +151,8 @@ aside li{
 
 aside li:hover{
     background-color: #FCA311;
-    border-radius: 15px;
+    border-radius: 5px;
+    /* padding-left: 32px; */
 }
 
 /* Global Book style */
@@ -115,7 +160,7 @@ aside li:hover{
 .book{
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 130px;
     align-items: center;
 }
 
@@ -126,20 +171,67 @@ aside li:hover{
 }
 
 .book .title{
-    padding : 10px;
-    width: 200px;
     font-weight: bold;
+    text-overflow: ellipsis;
 }
 
 .book .authors{
-    padding: 10px;
-    width: 200px;
+    text-overflow: ellipsis;
     font-style: italic;
     font-size: 12px;
 }
 
 /* Book Details Styles */
 
-/* .bookDetails{
+.bookDetails{
     display: flex;
-} */
+    gap: 24px;
+}
+
+.bookDetails img{
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+}
+
+.bookDetails i{
+    font-size: small;
+}
+
+@media (max-width:576px){
+    .homePage {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .homePage section{
+        display: flex;
+        flex-direction: column;
+        padding: 0 30px
+    };
+
+    .mainBookList{
+        margin: 0 30px;
+    }
+
+    .bookDetails{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bookDetails img{
+        width: 100%;
+        height: 100%;
+    }
+
+    aside{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    aside ul{
+        align-items: center;
+    }    
+}

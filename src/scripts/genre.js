@@ -7,7 +7,7 @@ const bookList = document.getElementById("booksByGenre");
 const genreName = document.getElementById("genreName");
 const genreList = document.getElementById("genre");
 
-/* Searchbar */
+/* Searchbar with style */
 
 form.addEventListener("submit", ($e) => {
 	$e.preventDefault();
@@ -15,21 +15,34 @@ form.addEventListener("submit", ($e) => {
 	if (searchTerm && searchTerm !== "") {
 		fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`)
 			.then((response) => response.json())
-			// .then((data) => console.log(data))
 			.then((data) => {
-				displayResults(data.items);
+				displayResults(data.items.slice(0, 5));
+				darken.style.display = "block";
+				searchResults.classList.add("show");
 			});
 		search.value = "";
 	} else {
-		window.location.reload;
+		window.location.reload();
+	}
+});
+
+/* Hide results when clicking elsewhere on the page */
+
+document.addEventListener("click", (event) => {
+	if (!searchResults.contains(event.target) && event.target !== search) {
+		searchResults.classList.remove("show");
+		darken.style.display = "none";
 	}
 });
 
 function displayResults(data) {
-	console.log(data);
 	searchResults.innerHTML = "";
-	data.map((bookResult) => {
-		console.log(bookResult.volumeInfo);
+
+	const resultContainer = document.createElement("div");
+	resultContainer.classList.add("result-container");
+	searchResults.appendChild(resultContainer);
+
+	data.forEach((bookResult) => {
 		const bookElement = document.createElement("div");
 		bookElement.classList.add("book");
 		bookElement.innerHTML = `
@@ -37,9 +50,16 @@ function displayResults(data) {
 			bookResult.volumeInfo.title || "Book Cover"
 		}"> 
             <p class="title">${bookResult.volumeInfo.title}</p>
-			<p class="authors">${bookResult.volumeInfo.authors}</p>
+            <p class="authors">${bookResult.volumeInfo.authors}</p>
         `;
-		searchResults.appendChild(bookElement);
+
+		bookElement.addEventListener("click", () => {
+			const bookId = `${bookResult.id}`;
+			// console.log(bookId);
+			window.location.href = `./details.html?volumeId=${bookId}`;
+		});
+
+		resultContainer.appendChild(bookElement);
 	});
 }
 

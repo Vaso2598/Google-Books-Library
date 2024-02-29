@@ -6,29 +6,42 @@ const searchResults = document.getElementById("results");
 const form = document.getElementById("form");
 const popular = document.getElementById("popular");
 
-/* Searchbar */
+/* Searchbar with style */
 
 form.addEventListener("submit", ($e) => {
 	$e.preventDefault();
 	const searchTerm = search.value;
 	if (searchTerm && searchTerm !== "") {
-		fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}:keyes&key=${Google_API_KEY}`)
+		fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`)
 			.then((response) => response.json())
-			// .then((data) => console.log(data))
 			.then((data) => {
-				displayResults(data.items);
+				displayResults(data.items.slice(0, 5));
+				darken.style.display = "block";
+				searchResults.classList.add("show");
 			});
 		search.value = "";
 	} else {
-		window.location.reload;
+		window.location.reload();
+	}
+});
+
+/* Hide results when clicking elsewhere on the page */
+
+document.addEventListener("click", (event) => {
+	if (!searchResults.contains(event.target) && event.target !== search) {
+		searchResults.classList.remove("show");
+		darken.style.display = "none";
 	}
 });
 
 function displayResults(data) {
-	console.log(data);
 	searchResults.innerHTML = "";
-	data.map((bookResult) => {
-		console.log(bookResult.volumeInfo);
+
+	const resultContainer = document.createElement("div");
+	resultContainer.classList.add("result-container");
+	searchResults.appendChild(resultContainer);
+
+	data.forEach((bookResult) => {
 		const bookElement = document.createElement("div");
 		bookElement.classList.add("book");
 		bookElement.innerHTML = `
@@ -36,10 +49,22 @@ function displayResults(data) {
 			bookResult.volumeInfo.title || "Book Cover"
 		}"> 
             <p class="title">${bookResult.volumeInfo.title}</p>
-			<p class="authors">${bookResult.volumeInfo.authors}</p>
+            <p class="authors">${bookResult.volumeInfo.authors}</p>
         `;
-		searchResults.appendChild(bookElement);
+
+		bookElement.addEventListener("click", () => {
+			const bookId = `${bookResult.id}`;
+			// console.log(bookId);
+			window.location.href = `./details.html?volumeId=${bookId}`;
+		});
+
+		resultContainer.appendChild(bookElement);
 	});
+
+	// const viewFullResultsLink = document.createElement("a");
+	// viewFullResultsLink.textContent = "View Full Results";
+	// viewFullResultsLink.onclick = () => window.open(`https://www.google.com/search?q=${search.value}`, "_blank");
+	// searchResults.appendChild(viewFullResultsLink);
 }
 
 /* Script for bestseller books */
@@ -90,10 +115,20 @@ function getBestSellersId(data) {
 
 function displayBestSellers(bookData) {
 	popular.innerHTML = "";
-	const booksToShow = bookData.slice(0, 8);
+	const booksToShow = bookData.slice(0, 20);
+	/*  */
+	const swiperEl = document.createElement("div");
+	swiperEl.classList.add("swiper");
+	popular.appendChild(swiperEl);
+	/*  */
+	const swiperWrapperEl = document.createElement("div");
+	swiperWrapperEl.classList.add("swiper-wrapper");
+	swiperEl.appendChild(swiperWrapperEl);
+	/*  */
 	booksToShow.forEach((bookResult) => {
 		// console.log(bookResult);
 		const bookElement = document.createElement("div");
+		bookElement.classList.add("swiper-slide");
 		bookElement.classList.add("book");
 		bookElement.innerHTML = `
             <img src="${bookResult.volumeInfo.imageLinks?.thumbnail}" alt="${
@@ -109,7 +144,29 @@ function displayBestSellers(bookData) {
 			window.location.href = `./details.html?volumeId=${bookId}`;
 		});
 
-		popular.appendChild(bookElement);
+		swiperWrapperEl.appendChild(bookElement);
+	});
+
+	const swiper = new Swiper(".swiper", {
+		// Optional parameters
+		direction: "horizontal",
+		slidesPerView: 2,
+		spaceBetween: 50,
+		breakpoints: {
+			640: {
+				slidesPerView: 5,
+				spaceBetween: 50,
+			},
+		},
+		autoplay: {
+			delay: 3000,
+			pauseOnMouseEnter: true,
+		},
+		/* scroll slide */
+		loop: true,
+		mousewheel: {
+			invert: true,
+		},
 	});
 }
 
