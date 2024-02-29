@@ -80,6 +80,10 @@ h2{
     width: 85vw;
 }
 
+.gerneSection{
+    width: 85vw;
+}
+
 /* Aside Menu Styles */
 
 aside{
@@ -133,3 +137,9 @@ aside li:hover{
     font-style: italic;
     font-size: 12px;
 }
+
+/* Book Details Styles */
+
+/* .bookDetails{
+    display: flex;
+} */

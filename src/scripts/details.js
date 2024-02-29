@@ -3,9 +3,8 @@ const Google_API_KEY = "AIzaSyC20juLxxzWQGC1YxsweUMsX9v60LcNq8k";
 const search = document.getElementById("search");
 const searchResults = document.getElementById("results");
 const form = document.getElementById("form");
-const bookList = document.getElementById("booksByGenre");
 const genreName = document.getElementById("genreName");
-const genreList = document.getElementById("genre");
+const bookDetails = document.getElementById("bookDetails");
 
 /* Searchbar */
 
@@ -45,6 +44,8 @@ function displayResults(data) {
 
 /* Event Listener for genres */
 
+const genreList = document.getElementById("genre");
+
 genreList.addEventListener("click", ($e) => {
 	// $e.preventDefault();
 	const target = $e.target;
@@ -54,43 +55,29 @@ genreList.addEventListener("click", ($e) => {
 	window.location.href = `./genre.html?subject=${genre}`;
 });
 
+/* Fetch book details */
+
 const urlParams = new URLSearchParams(window.location.search);
-const bookGenre = urlParams.get("subject");
-// console.log(bookGenre);
+const volumeId = urlParams.get("volumeId");
+// console.log(volumeId);
 
-/* Fetch books by Genres */
-
-genreName.innerHTML = `${bookGenre}`;
-
-fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:${bookGenre}`)
+fetch(`https://www.googleapis.com/books/v1/volumes/${volumeId}`)
 	.then((response) => response.json())
 	// .then((data) => console.log(data))
 	.then((data) => {
-		displayResultsByGenre(data.items);
+		displayDetails(data);
 	});
 
-function displayResultsByGenre(data) {
-	// console.log(data);
-	bookList.innerHTML = "";
-	const booksToShow = data.slice(0, 10);
-	booksToShow.map((booksByGenre) => {
-		// console.log(booksByGenre);
-		const booksByGenreElement = document.createElement("div");
-		booksByGenreElement.classList.add("book");
-		booksByGenreElement.innerHTML = `
-            <img src="${booksByGenre.volumeInfo.imageLinks?.thumbnail}" alt="${
-			booksByGenre.volumeInfo.title || "Book Cover"
-		}">
-            <p class="title">${booksByGenre.volumeInfo.title}</p>
-			<p class="authors">${booksByGenre.volumeInfo.authors}</p>
-        `;
-
-		booksByGenreElement.addEventListener("click", () => {
-			const bookId = `${booksByGenre.id}`;
-			console.log(bookId);
-			window.location.href = `./details.html?volumeId=${bookId}`;
-		});
-
-		bookList.appendChild(booksByGenreElement);
-	});
+function displayDetails(data) {
+	console.log(data);
+	bookDetails.classList.add("bookDetails");
+	bookDetails.innerHTML = `
+        <h4>${data.volumeInfo.title}</h4>
+        <p>${data.volumeInfo.authors}</p>
+        <p>${data.volumeInfo.publishedDate}</p>
+        <p>${data.volumeInfo.publisher}</p>
+        <p>${data.volumeInfo.categories}</p>
+        <img src="${data.volumeInfo.imageLinks?.thumbnail}" alt="${data.volumeInfo.title || "Book Cover"}">
+        <p>${data.volumeInfo.description}</p>
+    `;
 }

@@ -6,6 +6,8 @@ const searchResults = document.getElementById("results");
 const form = document.getElementById("form");
 const popular = document.getElementById("popular");
 
+/* Searchbar */
+
 form.addEventListener("submit", ($e) => {
 	$e.preventDefault();
 	const searchTerm = search.value;
@@ -100,6 +102,12 @@ function displayBestSellers(bookData) {
             <p class="title">${bookResult.volumeInfo.title}</p>
 			<p class="authors">${bookResult.volumeInfo.authors}</p>
         `;
+
+		bookElement.addEventListener("click", () => {
+			const bookId = `${bookResult.id}`;
+			console.log(bookId);
+			window.location.href = `./details.html?volumeId=${bookId}`;
+		});
 
 		popular.appendChild(bookElement);
 	});
