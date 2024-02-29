@@ -4,6 +4,10 @@
     font-family: "Inter", sans-serif;
 }
 
+* ::-webkit-scrollbar{
+    display: none;
+}
+
 main{
     margin: 0 24px;
 }
@@ -54,9 +58,9 @@ h2{
     justify-content: space-evenly;
 }
 
-/* Popular Books Styles*/
+/* Main page Styles*/
 
-.bookList{
+.mainBookList{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -64,10 +68,22 @@ h2{
     margin-top: 20px;
 }
 
+.gerneBookList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.mainSection{
+    width: 85vw;
+}
+
 /* Aside Menu Styles */
 
 aside{
-    width: 200px;
+    width: 15vw;
     background-color: #E5E5E5;
 }
 
@@ -80,18 +96,14 @@ aside ul{
 
 aside li{
     list-style: none;    
-}
-
-aside a{
-    text-decoration: none;
     color: #010C12;
     font-weight: 400;
+    cursor: pointer;
 }
 
 aside li:hover{
     background-color: #FCA311;
     border-radius: 15px;
-    /* padding: 5px 15px; */
 }
 
 /* Global Book style */
