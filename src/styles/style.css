@@ -27,6 +27,8 @@ header{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    width: 100vw;
 }
 
 header a{
@@ -214,7 +216,8 @@ article i{
 
 /* Footer Styles */
 footer{
-    position: absolute;
+    position: fixed;
+    bottom: 0;
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
