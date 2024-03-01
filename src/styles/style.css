@@ -225,6 +225,7 @@ footer{
     height: 50px;
     background-color: #14213D;
     color: #F0F0F0;
+    z-index: 100;
 }
 
 footer a{
