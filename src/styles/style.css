@@ -198,6 +198,21 @@ aside li:hover{
     font-size: small;
 }
 
+/* About us Styles */
+
+article{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+article img{
+    width: 100%;
+}
+
+article i{
+    font-size: 12px;
+}
+
 @media (max-width:576px){
     .homePage {
         margin: 0;
