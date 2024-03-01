@@ -5,6 +5,8 @@ const search = document.getElementById("search");
 const searchResults = document.getElementById("results");
 const form = document.getElementById("form");
 const popular = document.getElementById("popular");
+const bookList = document.getElementById("booksByGenre");
+const genreName = document.getElementById("genreName");
 
 /* Searchbar with style */
 
@@ -167,6 +169,41 @@ function displayBestSellers(bookData) {
 		mousewheel: {
 			invert: true,
 		},
+	});
+}
+
+/* Books you may like */
+
+fetch(`https://www.googleapis.com/books/v1/volumes?q=subject:fiction`)
+	.then((response) => response.json())
+	// .then((data) => console.log(data))
+	.then((data) => {
+		displayResultsByGenre(data.items);
+	});
+
+function displayResultsByGenre(data) {
+	// console.log(data);
+	bookList.innerHTML = "";
+	const booksToShow = data.slice(0, 5);
+	booksToShow.map((booksByGenre) => {
+		// console.log(booksByGenre);
+		const booksByGenreElement = document.createElement("div");
+		booksByGenreElement.classList.add("book");
+		booksByGenreElement.innerHTML = `
+            <img src="${booksByGenre.volumeInfo.imageLinks?.thumbnail}" alt="${
+			booksByGenre.volumeInfo.title || "Book Cover"
+		}">
+            <p class="title">${booksByGenre.volumeInfo.title}</p>
+			<p class="authors">${booksByGenre.volumeInfo.authors}</p>
+        `;
+
+		booksByGenreElement.addEventListener("click", () => {
+			const bookId = `${booksByGenre.id}`;
+			console.log(bookId);
+			window.location.href = `./details.html?volumeId=${bookId}`;
+		});
+
+		bookList.appendChild(booksByGenreElement);
 	});
 }
 

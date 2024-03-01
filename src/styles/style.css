@@ -150,9 +150,8 @@ aside li{
 }
 
 aside li:hover{
-    background-color: #FCA311;
-    border-radius: 5px;
-    /* padding-left: 32px; */
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 /* Global Book style */
@@ -213,6 +212,28 @@ article i{
     font-size: 12px;
 }
 
+/* Footer Styles */
+footer{
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100vw;
+    height: 50px;
+    background-color: #14213D;
+    color: #F0F0F0;
+}
+
+footer a{
+    text-decoration: none;
+    color: #F0F0F0;
+}
+
+footer a:hover{
+    color: #959595;
+    transition: 0.5 ease-in;
+}
+
 @media (max-width:576px){
     .homePage {
         margin: 0;
@@ -248,5 +269,12 @@ article i{
 
     aside ul{
         align-items: center;
-    }    
+    }   
+
+    article{
+        display: flex;
+        flex-direction: column;
+        padding: 0 24px;
+        gap: 24px;
+    }
 }
