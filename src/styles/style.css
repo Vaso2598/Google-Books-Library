@@ -29,6 +29,7 @@ header{
     align-items: center;
     position: fixed;
     width: 100vw;
+    height: 100px;
 }
 
 header a{
@@ -36,6 +37,11 @@ header a{
     color: #010C12;
     user-select: none;
     font-weight: bold;
+}
+
+main{
+    padding-top: 124px;
+    padding-bottom: 74px;
 }
 
 .form{
