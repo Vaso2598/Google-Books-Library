@@ -1,5 +1,4 @@
-const Google_API_KEY = "AIzaSyC20juLxxzWQGC1YxsweUMsX9v60LcNq8k";
-const Nyt_API_KEY = "DeAFDYAoBJe6gYO8gy88zHOH377fhZG0";
+import {Google_API_KEY, Nyt_API_KEY} from "../scripts/apikey.js";
 
 const search = document.getElementById("search");
 const searchResults = document.getElementById("results");
